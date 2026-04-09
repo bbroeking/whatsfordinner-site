@@ -3,72 +3,735 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WhatsForDinner - Privacy Policy</title>
+    <title>WhatsForDinner — Stop Asking "What Should We Eat Tonight?"</title>
+    <meta name="description" content="The meal planning app that picks dinners you'll actually want to cook, builds your shopping list, and orders the groceries — all in 5 minutes a week.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
     <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #F7F3EE;
+            --bg-card: #ECE6DB;
+            --accent: #CC6B3E;
+            --accent-light: #E08755;
+            --text-main: #2D241E;
+            --text-muted: #8E7F74;
+            --white: #FFFFFF;
+            --green: #4A7C59;
+        }
+
+        html { scroll-behavior: smooth; }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* HERO */
+        .hero {
+            padding: 80px 0 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(204, 107, 62, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(204, 107, 62, 0.1);
+            color: var(--accent);
+            padding: 8px 16px;
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.3); }
+        }
+
+        h1 {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: clamp(40px, 6vw, 64px);
+            line-height: 1.05;
+            font-weight: 400;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+            position: relative;
+        }
+
+        h1 span {
+            color: var(--accent);
+            font-style: italic;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(17px, 2vw, 20px);
+            color: var(--text-muted);
+            max-width: 620px;
+            margin: 0 auto 40px;
+            line-height: 1.5;
+            position: relative;
+        }
+
+        /* SIGNUP FORM */
+        .signup-form {
+            max-width: 460px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .signup-input-group {
+            display: flex;
+            gap: 8px;
+            background: var(--white);
+            padding: 8px;
+            border-radius: 14px;
+            box-shadow: 0 8px 24px rgba(204, 107, 62, 0.12);
+            border: 1px solid rgba(204, 107, 62, 0.15);
+        }
+
+        .signup-input-group input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 12px 16px;
+            font-size: 15px;
+            font-family: inherit;
+            color: var(--text-main);
+            outline: none;
+        }
+
+        .signup-input-group input::placeholder { color: var(--text-muted); }
+
+        .signup-input-group button {
+            background: var(--accent);
+            color: var(--white);
+            border: none;
+            padding: 12px 24px;
+            font-size: 15px;
+            font-weight: 600;
+            font-family: inherit;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .signup-input-group button:hover {
+            background: var(--accent-light);
+            transform: translateY(-1px);
+        }
+
+        .signup-input-group button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .signup-meta {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 14px;
+        }
+
+        .signup-success {
+            background: rgba(74, 124, 89, 0.1);
+            color: var(--green);
+            padding: 16px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            display: none;
+        }
+
+        .signup-error {
+            color: #c33;
+            font-size: 13px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        /* SECTIONS */
+        section { padding: 80px 0; }
+        section.alt { background: var(--white); }
+
+        .section-label {
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        h2 {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: clamp(32px, 4.5vw, 44px);
+            line-height: 1.15;
+            font-weight: 400;
+            text-align: center;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 17px;
+            max-width: 580px;
+            margin: 0 auto 56px;
+        }
+
+        /* PROBLEM */
+        .problems {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .problem {
+            background: var(--bg);
+            padding: 28px;
+            border-radius: 18px;
+            text-align: center;
+        }
+
+        .problem-icon {
+            font-size: 36px;
+            margin-bottom: 12px;
+        }
+
+        .problem h3 {
+            font-size: 17px;
+            margin-bottom: 8px;
+        }
+
+        .problem p {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        /* HOW IT WORKS */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 32px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 56px;
+            height: 56px;
+            background: var(--accent);
+            color: var(--white);
+            font-family: 'DM Serif Display', serif;
+            font-size: 24px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 20px rgba(204, 107, 62, 0.25);
+        }
+
+        .step h3 {
+            font-size: 19px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .step p {
+            color: var(--text-muted);
+            font-size: 15px;
+        }
+
+        /* FEATURES */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .feature {
+            background: var(--bg);
+            padding: 32px;
+            border-radius: 20px;
+            border: 1px solid rgba(0,0,0,0.04);
+        }
+
+        .feature-icon {
+            font-size: 28px;
+            margin-bottom: 14px;
+            display: inline-block;
+            padding: 12px;
+            background: rgba(204, 107, 62, 0.1);
+            border-radius: 12px;
+        }
+
+        .feature h3 {
+            font-size: 19px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .feature p {
+            color: var(--text-muted);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* STATS */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 32px;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .stat {
+            padding: 24px;
+        }
+
+        .stat-number {
+            font-family: 'DM Serif Display', serif;
+            font-size: 48px;
+            color: var(--accent);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* FAQ */
+        .faq-container {
             max-width: 720px;
             margin: 0 auto;
-            padding: 40px 24px;
-            color: #2D241E;
-            line-height: 1.6;
-            background: #F7F3EE;
         }
-        h1 { font-size: 28px; font-weight: 400; margin-bottom: 8px; }
-        h2 { font-size: 18px; font-weight: 600; margin-top: 32px; color: #CC6B3E; }
-        p, li { font-size: 15px; color: #4A3F37; }
-        .date { font-size: 13px; color: #8E7F74; margin-bottom: 32px; }
-        ul { padding-left: 20px; }
-        a { color: #CC6B3E; }
+
+        .faq-item {
+            background: var(--bg);
+            border-radius: 14px;
+            margin-bottom: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.04);
+        }
+
+        .faq-question {
+            padding: 20px 24px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+
+        .faq-question::after {
+            content: '+';
+            font-size: 24px;
+            color: var(--accent);
+            font-weight: 400;
+            transition: transform 0.2s;
+        }
+
+        .faq-item.open .faq-question::after { transform: rotate(45deg); }
+
+        .faq-answer {
+            padding: 0 24px;
+            max-height: 0;
+            overflow: hidden;
+            color: var(--text-muted);
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item.open .faq-answer {
+            padding: 0 24px 20px;
+            max-height: 300px;
+        }
+
+        /* FINAL CTA */
+        .final-cta {
+            text-align: center;
+            padding: 100px 24px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+            color: var(--white);
+        }
+
+        .final-cta h2 { color: var(--white); }
+        .final-cta .section-subtitle { color: rgba(255,255,255,0.9); }
+
+        .final-cta .signup-input-group {
+            box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        /* FOOTER */
+        footer {
+            padding: 40px 24px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 13px;
+            background: var(--bg);
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        @media (max-width: 600px) {
+            .signup-input-group { flex-direction: column; }
+            .signup-input-group button { padding: 14px; }
+            section { padding: 60px 0; }
+            .hero { padding: 60px 0 40px; }
+        }
     </style>
 </head>
 <body>
-    <h1>Privacy Policy</h1>
-    <p class="date">Last updated: April 8, 2026</p>
 
-    <p>WhatsForDinner ("we", "our", "the app") is a meal planning and recipe discovery app. We take your privacy seriously. This policy explains what data we collect, how we use it, and your rights.</p>
+    <!-- HERO -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-badge">Now in TestFlight beta</div>
+            <h1>Stop asking "what's <span>for dinner?</span>"</h1>
+            <p class="hero-subtitle">
+                WhatsForDinner picks meals you'll actually want to cook, plans your week, builds your shopping list, and orders the groceries. Five minutes on Sunday — eat well all week.
+            </p>
 
-    <h2>Data We Collect</h2>
-    <ul>
-        <li><strong>Account information:</strong> Email address and name when you create an account (via Supabase authentication).</li>
-        <li><strong>Preferences:</strong> Dietary restrictions, cuisine preferences, household size, and cooking skill level you provide during onboarding.</li>
-        <li><strong>App usage data:</strong> Recipes you save, meal plans you create, shopping lists you generate, and order history. This data is stored locally on your device and in your Supabase account.</li>
-    </ul>
+            <form class="signup-form" id="signup-form">
+                <div class="signup-input-group">
+                    <input type="email" id="email" placeholder="your@email.com" required>
+                    <button type="submit" id="submit-btn">Get Early Access</button>
+                </div>
+                <p class="signup-meta">Free during beta. No spam, ever. Unsubscribe anytime.</p>
+            </form>
+        </div>
+    </section>
 
-    <h2>Data We Do NOT Collect</h2>
-    <ul>
-        <li>We do not collect location data.</li>
-        <li>We do not track your browsing activity outside the app.</li>
-        <li>We do not sell, share, or rent your personal information to third parties.</li>
-        <li>We do not use advertising trackers or analytics SDKs.</li>
-    </ul>
+    <!-- PROBLEM -->
+    <section>
+        <div class="container">
+            <p class="section-label">The dinner-time tax</p>
+            <h2>Cooking shouldn't feel like a chore</h2>
+            <p class="section-subtitle">If meal planning feels harder than the actual cooking, you're not alone.</p>
 
-    <h2>Third-Party Services</h2>
-    <ul>
-        <li><strong>Supabase:</strong> Used for authentication and data storage. Their privacy policy: <a href="https://supabase.com/privacy">supabase.com/privacy</a></li>
-        <li><strong>Spoonacular API:</strong> Used to fetch recipe data. We send search queries (not personal data) to their API.</li>
-        <li><strong>Kroger API:</strong> If you choose to connect your Kroger account, we use OAuth to authenticate you directly with Kroger. We do not store your Kroger password. Kroger's privacy policy: <a href="https://www.kroger.com/i/privacy-policy">kroger.com/privacy</a></li>
-        <li><strong>Grocery store links:</strong> When you tap to order from Instacart, Walmart, or Whole Foods/Amazon, we open their website or app. We do not share your data with them — you interact with those services directly.</li>
-    </ul>
+            <div class="problems">
+                <div class="problem">
+                    <div class="problem-icon">😩</div>
+                    <h3>"What should we eat tonight?"</h3>
+                    <p>Asked at 5:47pm. Every. Single. Day.</p>
+                </div>
+                <div class="problem">
+                    <div class="problem-icon">🛒</div>
+                    <h3>Forgot the cilantro. Again.</h3>
+                    <p>Three trips to the store. One recipe.</p>
+                </div>
+                <div class="problem">
+                    <div class="problem-icon">🥬</div>
+                    <h3>Limp herbs in the crisper</h3>
+                    <p>You bought it on Sunday. It died by Wednesday.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <h2>Data Storage</h2>
-    <p>Your recipes, meal plans, shopping lists, and preferences are stored locally on your device using Apple's SwiftData framework. Account data is synced via Supabase's hosted database. All network communication uses HTTPS encryption.</p>
+    <!-- HOW IT WORKS -->
+    <section class="alt">
+        <div class="container">
+            <p class="section-label">How it works</p>
+            <h2>From "no idea" to "groceries ordered"</h2>
+            <p class="section-subtitle">Three steps. Five minutes. The whole week handled.</p>
 
-    <h2>Your Rights</h2>
-    <ul>
-        <li>You can delete your account and all associated data at any time from the app's Profile settings.</li>
-        <li>You can export or request a copy of your data by contacting us.</li>
-        <li>You can use the app without creating an account (limited to local-only data).</li>
-    </ul>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Pick your meals</h3>
+                    <p>Take a 30-second quiz or browse 40+ recipes filtered by what you're craving, what's in your fridge, and how much time you have.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Plan your week</h3>
+                    <p>Drop recipes onto Monday through Sunday. Plan a single week or a whole month. Skip the nights you'll eat out.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Order the groceries</h3>
+                    <p>One tap turns your meal plan into a smart shopping list. Order from Kroger, Instacart, Whole Foods, or Walmart.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <h2>Children's Privacy</h2>
-    <p>WhatsForDinner is not directed at children under 13. We do not knowingly collect information from children under 13.</p>
+    <!-- FEATURES -->
+    <section>
+        <div class="container">
+            <p class="section-label">What's inside</p>
+            <h2>The whole kitchen, in your pocket</h2>
+            <p class="section-subtitle">Every feature designed to give you back your evenings.</p>
 
-    <h2>Changes to This Policy</h2>
-    <p>We may update this policy from time to time. We will notify you of significant changes through the app or via email.</p>
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">⚡️</div>
+                    <h3>Smart quiz, smarter results</h3>
+                    <p>Tell us your mood, time, and dietary needs in 30 seconds. We find recipes that actually fit — not generic suggestions.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">📅</div>
+                    <h3>Drag-and-drop meal plans</h3>
+                    <p>Plan dinner for tonight or your meals for the entire month. Organized by breakfast, lunch, dinner, snack.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🛒</div>
+                    <h3>Aisle-by-aisle shopping</h3>
+                    <p>Your list groups ingredients by store section so you're not zigzagging the grocery store. Pantry staples hidden by default.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🌿</div>
+                    <h3>Freshness coach</h3>
+                    <p>Cooking with cilantro on Thursday? We tell you to wait until Wednesday to buy it. No more limp herbs.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🛍</div>
+                    <h3>Order in two taps</h3>
+                    <p>Send your list straight to Kroger, Instacart, Whole Foods, or Walmart. Real prices. Real cart. Done.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🥑</div>
+                    <h3>Filters that matter</h3>
+                    <p>Vegan, keto, gluten-free, pescatarian, under 20 minutes, fewer than 6 ingredients. Stack them all.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <h2>Contact</h2>
-    <p>Questions about this privacy policy? Contact us at:<br>
-    <a href="mailto:privacy@whatsfordinner.app">privacy@whatsfordinner.app</a></p>
+    <!-- STATS -->
+    <section class="alt">
+        <div class="container">
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number">5min</div>
+                    <div class="stat-label">to plan your whole week</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">40+</div>
+                    <div class="stat-label">curated recipes (and growing)</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">9</div>
+                    <div class="stat-label">cuisines covered</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">4</div>
+                    <div class="stat-label">grocery store integrations</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section>
+        <div class="container">
+            <p class="section-label">Questions</p>
+            <h2>Things people ask</h2>
+            <p class="section-subtitle"></p>
+
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">When can I download it?</div>
+                    <div class="faq-answer">We're rolling out TestFlight beta invites now. Sign up above and we'll send you a link as spots open up.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Is it free?</div>
+                    <div class="faq-answer">Yes, completely free during the beta. Pricing for the full release will be announced before launch — early signups get a discount.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Do I need a Kroger account to use it?</div>
+                    <div class="faq-answer">Nope. Kroger ordering is one option, but you can also use Instacart, Whole Foods, Walmart, or just take the list to your local store.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">What if I have dietary restrictions?</div>
+                    <div class="faq-answer">We support vegan, vegetarian, gluten-free, dairy-free, nut-free, keto, paleo, and pescatarian. Set your preferences once and they apply everywhere.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">iPhone only?</div>
+                    <div class="faq-answer">For now, yes — we're iOS-first. Android is on the roadmap once we hit our beta milestones.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Will my data be private?</div>
+                    <div class="faq-answer">Always. We never sell your data, never run ads, and never share your meal plans. Read our <a href="privacy.html" style="color: var(--accent)">privacy policy</a>.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="final-cta">
+        <div class="container">
+            <h2>Get your evenings back</h2>
+            <p class="section-subtitle">Join the beta. Be among the first to stop asking "what's for dinner?"</p>
+
+            <form class="signup-form" id="signup-form-2">
+                <div class="signup-input-group">
+                    <input type="email" id="email-2" placeholder="your@email.com" required>
+                    <button type="submit" id="submit-btn-2">Get Early Access</button>
+                </div>
+                <p class="signup-meta" style="color: rgba(255,255,255,0.85)">Free during beta · No spam · Unsubscribe anytime</p>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 WhatsForDinner · <a href="privacy.html">Privacy Policy</a> · <a href="mailto:hello@whatsfordinner.app">Contact</a></p>
+    </footer>
+
+    <script>
+        const SUPABASE_URL = 'https://igysmkmuutpiussjiuqa.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_v-UkI3iUr1Wurjn_BC-Y9g_V_GLBJuy';
+
+        // FAQ toggle
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.querySelector('.faq-question').addEventListener('click', () => {
+                item.classList.toggle('open');
+            });
+        });
+
+        async function submitEmail(emailInput, submitBtn, formId) {
+            const email = emailInput.value.trim();
+            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                showError(formId, 'Please enter a valid email');
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Adding you...';
+
+            try {
+                const response = await fetch(`${SUPABASE_URL}/rest/v1/waitlist`, {
+                    method: 'POST',
+                    headers: {
+                        'apikey': SUPABASE_KEY,
+                        'Authorization': `Bearer ${SUPABASE_KEY}`,
+                        'Content-Type': 'application/json',
+                        'Prefer': 'return=minimal'
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        source: 'landing_page',
+                        referrer: document.referrer || null,
+                        user_agent: navigator.userAgent
+                    })
+                });
+
+                if (response.ok || response.status === 201) {
+                    showSuccess(formId);
+                    emailInput.value = '';
+                } else if (response.status === 409) {
+                    showSuccess(formId, "You're already on the list!");
+                } else {
+                    const text = await response.text();
+                    if (text.includes('duplicate') || text.includes('unique')) {
+                        showSuccess(formId, "You're already on the list!");
+                    } else {
+                        throw new Error('Signup failed');
+                    }
+                }
+            } catch (err) {
+                showError(formId, 'Something went wrong. Try again?');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Get Early Access';
+            }
+        }
+
+        function showSuccess(formId, message) {
+            if (!message) message = "🎉 You're on the list! We'll send your TestFlight invite soon.";
+            const form = document.getElementById(formId);
+            const inputGroup = form.querySelector('.signup-input-group');
+            const meta = form.querySelector('.signup-meta');
+            inputGroup.style.display = 'none';
+            if (meta) meta.style.display = 'none';
+
+            let success = form.querySelector('.signup-success');
+            if (!success) {
+                success = document.createElement('div');
+                success.className = 'signup-success';
+                form.appendChild(success);
+            }
+            success.textContent = message;
+            success.style.display = 'block';
+        }
+
+        function showError(formId, message) {
+            const form = document.getElementById(formId);
+            let error = form.querySelector('.signup-error');
+            if (!error) {
+                error = document.createElement('div');
+                error.className = 'signup-error';
+                form.appendChild(error);
+            }
+            error.textContent = message;
+            error.style.display = 'block';
+        }
+
+        document.getElementById('signup-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            submitEmail(document.getElementById('email'), document.getElementById('submit-btn'), 'signup-form');
+        });
+
+        document.getElementById('signup-form-2').addEventListener('submit', (e) => {
+            e.preventDefault();
+            submitEmail(document.getElementById('email-2'), document.getElementById('submit-btn-2'), 'signup-form-2');
+        });
+    </script>
+
 </body>
 </html>
